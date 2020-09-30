@@ -2,14 +2,14 @@
 
 namespace Optimus\Heimdal;
 
-use Exception;
-use ReflectionClass;
-use InvalidArgumentException;
 use Asm89\Stack\CorsService;
+use Exception;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Exceptions\Handler as LaravelExceptionHandler;
+use InvalidArgumentException;
 use Optimus\Heimdal\Formatters\BaseFormatter;
 use Optimus\Heimdal\Reporters\ReporterInterface;
-use Illuminate\Contracts\Container\Container;
+use ReflectionClass;
 
 class ExceptionHandler extends LaravelExceptionHandler
 {
@@ -23,7 +23,8 @@ class ExceptionHandler extends LaravelExceptionHandler
 
     /**
      * ExceptionHandler constructor.
-     * @param Container $container
+     *
+     * @param  Container  $container
      */
     public function __construct(Container $container)
     {
@@ -36,7 +37,8 @@ class ExceptionHandler extends LaravelExceptionHandler
     /**
      * Report
      *
-     * @param Exception $e
+     * @param  Exception  $e
+     *
      * @throws Exception
      * @returns void
      */
@@ -53,7 +55,7 @@ class ExceptionHandler extends LaravelExceptionHandler
         $reporters = $this->config['reporters'];
 
         foreach ($reporters as $key => $reporter) {
-            $class = !isset($reporter['class']) ? null : $reporter['class'];
+            $class = !isset($reporter['class']) ? NULL : $reporter['class'];
 
             if (
                 is_null($class) ||
@@ -82,8 +84,9 @@ class ExceptionHandler extends LaravelExceptionHandler
     /**
      * Render
      *
-     * @param \Illuminate\Http\Request $request
-     * @param Exception $e
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Exception                 $e
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function render($request, Exception $e)
@@ -108,8 +111,9 @@ class ExceptionHandler extends LaravelExceptionHandler
     /**
      * Generate exception response
      *
-     * @param $request
-     * @param Exception $e
+     * @param             $request
+     * @param  Exception  $e
+     *
      * @return mixed
      */
     private function generateExceptionResponse($request, Exception $e)
@@ -122,7 +126,7 @@ class ExceptionHandler extends LaravelExceptionHandler
         // Allow users to have a base formatter for every response.
         $response = $responseFactoryClass::make($e);
 
-        foreach($formatters as $exceptionType => $formatter) {
+        foreach ($formatters as $exceptionType => $formatter) {
             if (!($e instanceof $exceptionType)) {
                 continue;
             }

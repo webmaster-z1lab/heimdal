@@ -5,7 +5,6 @@ namespace Optimus\Heimdal\Reporters;
 use Exception;
 use InvalidArgumentException;
 use Raven_Client;
-use Optimus\Heimdal\Reporters\ReporterInterface;
 
 class SentryReporter implements ReporterInterface
 {
@@ -31,7 +30,7 @@ class SentryReporter implements ReporterInterface
             $options
         );
 
-        $data = null;
+        $data = NULL;
         if (isset($options['add_context']) && is_callable($options['add_context'])) {
             $data = $options['add_context']($e);
         }

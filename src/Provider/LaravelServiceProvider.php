@@ -7,7 +7,8 @@ use Optimus\Heimdal\Reporters\BugsnagReporter;
 use Optimus\Heimdal\Reporters\RollbarReporter;
 use Optimus\Heimdal\Reporters\SentryReporter;
 
-class LaravelServiceProvider extends BaseProvider {
+class LaravelServiceProvider extends BaseProvider
+{
 
     public function register()
     {
@@ -19,13 +20,13 @@ class LaravelServiceProvider extends BaseProvider {
     private function registerAssets()
     {
         $this->publishes([
-            __DIR__.'/../config/optimus.heimdal.php' => config_path('optimus.heimdal.php')
+            __DIR__.'/../config/optimus.heimdal.php' => config_path('optimus.heimdal.php'),
         ]);
     }
 
     private function loadConfig()
     {
-        if ($this->app['config']->get('optimus.heimdal') === null) {
+        if ($this->app['config']->get('optimus.heimdal') === NULL) {
             $this->app['config']->set('optimus.heimdal', require __DIR__.'/../config/optimus.heimdal.php');
         }
     }

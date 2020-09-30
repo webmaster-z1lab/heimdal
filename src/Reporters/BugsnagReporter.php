@@ -2,8 +2,8 @@
 
 namespace Optimus\Heimdal\Reporters;
 
-use Exception;
 use Bugsnag\Client;
+use Exception;
 use InvalidArgumentException;
 
 class BugsnagReporter implements ReporterInterface
@@ -13,7 +13,8 @@ class BugsnagReporter implements ReporterInterface
 
     /**
      * SentryReporter constructor.
-     * @param array $config
+     *
+     * @param  array  $config
      */
     public function __construct(array $config)
     {
@@ -27,7 +28,7 @@ class BugsnagReporter implements ReporterInterface
     /**
      * Report exception
      *
-     * @param Exception $exception
+     * @param  Exception  $exception
      */
     public function report(Exception $exception)
     {

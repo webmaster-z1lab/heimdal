@@ -11,12 +11,12 @@ class UnprocessableEntityHttpExceptionFormatterTest extends TestCase
     {
         $errorsAsJson = json_encode([
             'field1' => ['field1.error1'],
-            'field2' => ['field2.error1', 'field2.error2']
+            'field2' => ['field2.error1', 'field2.error2'],
         ]);
 
-        $exception = new UnprocessableEntityHttpException($errorsAsJson, null, 12345);
+        $exception = new UnprocessableEntityHttpException($errorsAsJson, NULL, 12345);
         $response = ResponseFactory::make($exception);
-        $formatter = new UnprocessableEntityHttpExceptionFormatter(getConfigStub(), false);
+        $formatter = new UnprocessableEntityHttpExceptionFormatter(getConfigStub(), FALSE);
 
         $formatter->format($response, $exception, []);
 

@@ -15,7 +15,7 @@ class HttpExceptionFormatterTest extends TestCase
         $exception = new HttpException('401', 'Error');
         $response = ResponseFactory::make($exception);
 
-        $formatter = new HttpExceptionFormatter($config, true);
+        $formatter = new HttpExceptionFormatter($config, TRUE);
         $formatter->format($response, $exception, []);
 
         $this->assertTrue($formatter instanceof ExceptionFormatter);

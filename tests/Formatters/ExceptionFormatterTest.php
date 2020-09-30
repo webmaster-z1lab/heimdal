@@ -18,7 +18,7 @@ class ExceptionFormatterTest extends TestCase
 
     public function testEnsureProductionData()
     {
-        $formatter = new ExceptionFormatter($this->config, false);
+        $formatter = new ExceptionFormatter($this->config, FALSE);
         $formatter->format($this->response, $this->exception, []);
 
         $data = $this->response->getData();
@@ -28,7 +28,7 @@ class ExceptionFormatterTest extends TestCase
 
     public function testEnsureDebugData()
     {
-        $formatter = new ExceptionFormatter($this->config, true);
+        $formatter = new ExceptionFormatter($this->config, TRUE);
         $formatter->format($this->response, $this->exception, []);
 
         $data = $this->response->getData();

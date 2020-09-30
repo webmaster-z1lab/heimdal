@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Optimus\Heimdal\ExceptionHandler;
 use Optimus\Heimdal\Formatters\BaseFormatter;
 use Orchestra\Testbench\TestCase;
@@ -24,7 +24,8 @@ class HttpExceptionFormatter extends BaseFormatter
     }
 }
 
-class ExceptionHandlerTest extends TestCase {
+class ExceptionHandlerTest extends TestCase
+{
 
     public function setUp()
     {
@@ -38,7 +39,7 @@ class ExceptionHandlerTest extends TestCase {
      */
     private function createHandler()
     {
-        app()->bind(TestReporter::class, function($app){
+        app()->bind(TestReporter::class, function ($app) {
             return function (array $config) {
                 return new TestReporter($config);
             };
@@ -55,8 +56,8 @@ class ExceptionHandlerTest extends TestCase {
         $responses = $handler->getReportResponses();
 
         $this->assertEquals([
-            'test' => 'Test: 1234',
-            'test2' => 'Test: 4321'
+            'test'  => 'Test: 1234',
+            'test2' => 'Test: 4321',
         ], $responses);
     }
 
@@ -70,14 +71,14 @@ class ExceptionHandlerTest extends TestCase {
 
         $property = $reflectionHandler->getProperty('dontReport');
 
-        $property->setAccessible(true);
+        $property->setAccessible(TRUE);
 
         $property->setValue($handler, [
-            get_class($exception)
+            get_class($exception),
         ]);
 
         $responses = $reflectionHandler->getMethod('report')
-                                       ->invoke($handler, $exception);
+            ->invoke($handler, $exception);
 
         $this->assertEquals([], $responses);
     }
@@ -86,7 +87,7 @@ class ExceptionHandlerTest extends TestCase {
     {
         app()['config']->set('optimus.heimdal.formatters', [
             HttpException::class => HttpExceptionFormatter::class,
-            Exception::class => ExceptionFormatter::class
+            Exception::class     => ExceptionFormatter::class,
         ]);
 
         $handler = $this->createHandler();
@@ -112,7 +113,7 @@ class ExceptionHandlerTest extends TestCase {
 
         $property = $reflectionHandler->getProperty('config');
 
-        $property->setAccessible(true);
+        $property->setAccessible(TRUE);
 
         $config = $property->getValue($handler);
 
@@ -130,14 +131,14 @@ class ExceptionHandlerTest extends TestCase {
         );
 
         $reflectionHandler->getMethod('report')
-                          ->invoke($handler, $exception);
+            ->invoke($handler, $exception);
     }
 
     public function testInvalidFormatterClass()
     {
         $handler = $this->createHandler();
 
-        $request = null;
+        $request = NULL;
 
         $exception = new Exception('Test');
         $formatter = new stdClass();
@@ -146,7 +147,7 @@ class ExceptionHandlerTest extends TestCase {
 
         $property = $reflectionHandler->getProperty('config');
 
-        $property->setAccessible(true);
+        $property->setAccessible(TRUE);
 
         $config = $property->getValue($handler);
 
@@ -166,7 +167,7 @@ class ExceptionHandlerTest extends TestCase {
 
         $method = $reflectionHandler->getMethod('generateExceptionResponse');
 
-        $method->setAccessible(true);
+        $method->setAccessible(TRUE);
 
         $method->invokeArgs($handler, [$request, $exception]);
     }

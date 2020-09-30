@@ -4,22 +4,21 @@ namespace Optimus\Heimdal\Formatters;
 
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Optimus\Heimdal\Formatters\BaseFormatter;
 
 class ExceptionFormatter extends BaseFormatter
 {
     public function format(JsonResponse $response, Exception $e, array $reporterResponses)
     {
         $response->setStatusCode(500);
-        $data = $response->getData(true);
+        $data = $response->getData(TRUE);
 
         if ($this->debug) {
             $data = array_merge($data, [
-                'code'   => $e->getCode(),
+                'code'      => $e->getCode(),
                 'message'   => $e->getMessage(),
                 'exception' => (string) $e,
-                'line'   => $e->getLine(),
-                'file'   => $e->getFile()
+                'line'      => $e->getLine(),
+                'file'      => $e->getFile(),
             ]);
         } else {
             $data['message'] = $this->config['server_error_production'];

@@ -3,14 +3,16 @@
 namespace Optimus\Heimdal\Reporters;
 
 use Exception;
-use Rollbar;
 use InvalidArgumentException;
+use Rollbar;
 
 class RollbarReporter implements ReporterInterface
 {
     /**
      * RollbarReporter constructor.
-     * @param array $config
+     *
+     * @param  array  $config
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct(array $config)
@@ -25,7 +27,8 @@ class RollbarReporter implements ReporterInterface
     /**
      * Report exception
      *
-     * @param Exception $exception
+     * @param  Exception  $exception
+     *
      * @return string|void
      */
     public function report(Exception $exception)

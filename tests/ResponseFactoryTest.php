@@ -6,7 +6,8 @@ use Orchestra\Testbench\TestCase;
 
 class ResponseFactoryTest extends TestCase
 {
-    public function testMakeReturnsJsonResponse() {
+    public function testMakeReturnsJsonResponse()
+    {
         $response = ResponseFactory::make(new \Exception());
         $this->assertTrue($response instanceof JsonResponse);
         $this->assertEquals('error', $response->getData()->status);

@@ -24,18 +24,18 @@ function getConfigStub()
     $reporterMock = \Mockery::mock('ReporterClass');
 
     $config['reporters'] = [
-        'test' => [
-            'class' => TestReporter::class,
+        'test'  => [
+            'class'  => TestReporter::class,
             'config' => [
-                'test' => 1234
-            ]
+                'test' => 1234,
+            ],
         ],
         'test2' => [
-            'class' => TestReporter::class,
+            'class'  => TestReporter::class,
             'config' => [
-                'test' => 4321
-            ]
-        ]
+                'test' => 4321,
+            ],
+        ],
     ];
 
     return $config;
