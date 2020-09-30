@@ -9,29 +9,28 @@ use Optimus\Heimdal\Reporters\SentryReporter;
 
 class LaravelServiceProvider extends BaseProvider
 {
-
-    public function register()
+    public function register(): void
     {
         $this->loadConfig();
         $this->registerAssets();
         $this->bindReporters();
     }
 
-    private function registerAssets()
+    private function registerAssets(): void
     {
         $this->publishes([
             __DIR__.'/../config/optimus.heimdal.php' => config_path('optimus.heimdal.php'),
         ]);
     }
 
-    private function loadConfig()
+    private function loadConfig(): void
     {
         if ($this->app['config']->get('optimus.heimdal') === NULL) {
             $this->app['config']->set('optimus.heimdal', require __DIR__.'/../config/optimus.heimdal.php');
         }
     }
 
-    private function bindReporters()
+    private function bindReporters(): void
     {
         $this->app->bind(BugsnagReporter::class, function ($app) {
             return function (array $config) {

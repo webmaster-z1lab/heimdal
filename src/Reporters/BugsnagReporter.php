@@ -26,9 +26,7 @@ class BugsnagReporter implements ReporterInterface
     }
 
     /**
-     * Report exception
-     *
-     * @param  Exception  $exception
+     * @param  \Exception  $exception
      */
     public function report(Exception $exception)
     {

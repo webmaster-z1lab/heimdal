@@ -1,17 +1,18 @@
 <?php
 
+namespace Tests\Formatters;
+
 use Optimus\Heimdal\Formatters\ExceptionFormatter;
 use Optimus\Heimdal\ResponseFactory;
 use Orchestra\Testbench\TestCase;
 
 class ExceptionFormatterTest extends TestCase
 {
-
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->exception = new Exception('Error', 100);
+        $this->exception = new \Exception('Error', 100);
         $this->response = ResponseFactory::make($this->exception);
         $this->config = getConfigStub();
     }

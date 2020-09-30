@@ -1,27 +1,23 @@
 <?php
-/**
- * Created by Olimar Ferraz
- * webmaster@z1lab.com.br
- * Date: 29/07/2019
- * Time: 16:07
- */
+
 
 namespace Optimus\Heimdal\Formatters;
+
 
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Optimus\Heimdal\ErrorObject;
 
-class ExceptionFormatter extends BaseFormatter
+class AuthorizationExceptionFormatter extends BaseFormatter
 {
     /**
-     * @param  JsonResponse  $response
-     * @param  Exception     $e
-     * @param  array         $reporterResponses
+     * @param  \Illuminate\Http\JsonResponse  $response
+     * @param  \Exception                     $e
+     * @param  array                          $reporterResponses
      */
     public function format(JsonResponse $response, Exception $e, array $reporterResponses): void
     {
-        $response->setStatusCode(500);
+        $response->setStatusCode(403);
 
         $meta = [];
 
@@ -34,9 +30,7 @@ class ExceptionFormatter extends BaseFormatter
             ];
         }
 
-        $code = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : $e->getCode();
-
-        $json = new ErrorObject($e->getMessage(), $code, $meta);
+        $json = new ErrorObject($e->getMessage(), 403, $meta);
 
         $response->setData($json->toArray());
     }

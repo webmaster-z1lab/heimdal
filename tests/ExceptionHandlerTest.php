@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Optimus\Heimdal\ExceptionHandler;
@@ -7,6 +9,7 @@ use Optimus\Heimdal\Formatters\BaseFormatter;
 use Orchestra\Testbench\TestCase;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Exception;
 
 class ExceptionFormatter extends BaseFormatter
 {
@@ -27,7 +30,7 @@ class HttpExceptionFormatter extends BaseFormatter
 class ExceptionHandlerTest extends TestCase
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -61,13 +64,16 @@ class ExceptionHandlerTest extends TestCase
         ], $responses);
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function testReportIgnoredException()
     {
         $handler = $this->createHandler();
 
         $exception = new Exception('Test');
 
-        $reflectionHandler = new ReflectionClass($handler);
+        $reflectionHandler = new \ReflectionClass($handler);
 
         $property = $reflectionHandler->getProperty('dontReport');
 
@@ -103,13 +109,16 @@ class ExceptionHandlerTest extends TestCase
         $this->assertEquals('Http', $response->getData()->message);
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function testReportInvalidReporterClass()
     {
         $handler = $this->createHandler();
 
         $exception = new Exception('Test');
 
-        $reflectionHandler = new ReflectionClass($handler);
+        $reflectionHandler = new \ReflectionClass($handler);
 
         $property = $reflectionHandler->getProperty('config');
 
@@ -119,7 +128,7 @@ class ExceptionHandlerTest extends TestCase
 
         $config['reporters'] = [
             'invalid' => [
-                'class' => stdClass::class,
+                'class' => \stdClass::class,
             ],
         ];
 
@@ -134,6 +143,9 @@ class ExceptionHandlerTest extends TestCase
             ->invoke($handler, $exception);
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function testInvalidFormatterClass()
     {
         $handler = $this->createHandler();
@@ -141,9 +153,9 @@ class ExceptionHandlerTest extends TestCase
         $request = NULL;
 
         $exception = new Exception('Test');
-        $formatter = new stdClass();
+        $formatter = new \stdClass();
 
-        $reflectionHandler = new ReflectionClass($handler);
+        $reflectionHandler = new \ReflectionClass($handler);
 
         $property = $reflectionHandler->getProperty('config');
 

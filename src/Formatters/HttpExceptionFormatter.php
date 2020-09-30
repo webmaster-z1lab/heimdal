@@ -1,13 +1,25 @@
 <?php
+/**
+ * Created by Olimar Ferraz
+ * webmaster@z1lab.com.br
+ * Date: 29/07/2019
+ * Time: 16:07
+ */
 
 namespace Optimus\Heimdal\Formatters;
+
 
 use Exception;
 use Illuminate\Http\JsonResponse;
 
 class HttpExceptionFormatter extends ExceptionFormatter
 {
-    public function format(JsonResponse $response, Exception $e, array $reporterResponses)
+    /**
+     * @param  \Illuminate\Http\JsonResponse  $response
+     * @param  \Exception                     $e
+     * @param  array                          $reporterResponses
+     */
+    public function format(JsonResponse $response, Exception $e, array $reporterResponses): void
     {
         parent::format($response, $e, $reporterResponses);
 
@@ -17,4 +29,5 @@ class HttpExceptionFormatter extends ExceptionFormatter
 
         $response->setStatusCode($e->getStatusCode());
     }
+
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Formatters;
+
 use Optimus\Heimdal\Formatters\ExceptionFormatter;
 use Optimus\Heimdal\Formatters\HttpExceptionFormatter;
 use Optimus\Heimdal\ResponseFactory;
@@ -8,7 +10,6 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class HttpExceptionFormatterTest extends TestCase
 {
-
     public function testHttpCodeIsset()
     {
         $config = getConfigStub();

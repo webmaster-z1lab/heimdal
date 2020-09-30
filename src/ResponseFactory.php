@@ -2,12 +2,17 @@
 
 namespace Optimus\Heimdal;
 
-use Exception;
+use Throwable;
 use Illuminate\Http\JsonResponse;
 
 class ResponseFactory
 {
-    public static function make(Exception $e)
+    /**
+     * @param  \Throwable  $e
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public static function make(Throwable $e)
     {
         return new JsonResponse([
             'status' => 'error',

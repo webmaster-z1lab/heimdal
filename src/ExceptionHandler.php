@@ -3,7 +3,7 @@
 namespace Optimus\Heimdal;
 
 use Asm89\Stack\CorsService;
-use Exception;
+use Throwable;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Exceptions\Handler as LaravelExceptionHandler;
 use InvalidArgumentException;
@@ -35,14 +35,12 @@ class ExceptionHandler extends LaravelExceptionHandler
     }
 
     /**
-     * Report
+     * @param  \Throwable  $e
      *
-     * @param  Exception  $e
-     *
-     * @throws Exception
-     * @returns void
+     * @return array|void
+     * @throws \Throwable
      */
-    public function report(Exception $e)
+    public function report(Throwable $e)
     {
         parent::report($e);
 
@@ -82,14 +80,13 @@ class ExceptionHandler extends LaravelExceptionHandler
     }
 
     /**
-     * Render
-     *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Exception                 $e
+     * @param  \Throwable                $e
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response|mixed|\Symfony\Component\HttpFoundation\Response
+     * @throws \ReflectionException
      */
-    public function render($request, Exception $e)
+    public function render($request, Throwable $e)
     {
         $response = $this->generateExceptionResponse($request, $e);
 
@@ -109,14 +106,13 @@ class ExceptionHandler extends LaravelExceptionHandler
     }
 
     /**
-     * Generate exception response
-     *
-     * @param             $request
-     * @param  Exception  $e
+     * @param              $request
+     * @param  \Throwable  $e
      *
      * @return mixed
+     * @throws \ReflectionException
      */
-    private function generateExceptionResponse($request, Exception $e)
+    private function generateExceptionResponse($request, Throwable $e)
     {
         $formatters = $this->config['formatters'];
 

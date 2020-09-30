@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Formatters;
+
 use Optimus\Heimdal\Formatters\UnprocessableEntityHttpExceptionFormatter;
 use Optimus\Heimdal\ResponseFactory;
 use Orchestra\Testbench\TestCase;

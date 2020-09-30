@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Reporters;
+
 use Bugsnag\Client;
 use Optimus\Heimdal\Reporters\BugsnagReporter;
 use Orchestra\Testbench\TestCase;
@@ -11,11 +13,11 @@ class BugsnagReporterTest extends TestCase
 
     protected $client;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->client = $this->getMockBuilder(stdClass::class)
+        $this->client = $this->getMockBuilder(\stdClass::class)
             ->setMethods(['notifyException'])
             ->getMock();
 
@@ -26,7 +28,7 @@ class BugsnagReporterTest extends TestCase
 
     public function testReport()
     {
-        $exception = new Exception('Test');
+        $exception = new \Exception('Test');
 
         $expectedResponse = 'success';
 

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by Olimar Ferraz
- * webmaster@z1lab.com.br
- * Date: 29/07/2019
- * Time: 16:07
- */
 
 namespace Optimus\Heimdal\Formatters;
 
@@ -12,16 +6,17 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Optimus\Heimdal\ErrorObject;
 
-class ExceptionFormatter extends BaseFormatter
+class PassportExceptionFormatter extends BaseFormatter
 {
     /**
-     * @param  JsonResponse  $response
-     * @param  Exception     $e
-     * @param  array         $reporterResponses
+     * @param  \Illuminate\Http\JsonResponse  $response
+     * @param  \Exception                     $e
+     * @param  array                          $reporterResponses
      */
     public function format(JsonResponse $response, Exception $e, array $reporterResponses): void
     {
-        $response->setStatusCode(500);
+        /** @var \League\OAuth2\Server\Exception\OAuthServerException $e */
+        $response->setStatusCode($e->getHttpStatusCode());
 
         $meta = [];
 
@@ -29,14 +24,12 @@ class ExceptionFormatter extends BaseFormatter
             $meta = [
                 'file'    => $e->getFile(),
                 'line'    => $e->getLine(),
-                'message' => $e->getMessage(),
+                'message' => $e->getHint(),
                 'trace'   => $e->getTrace(),
             ];
         }
 
-        $code = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : $e->getCode();
-
-        $json = new ErrorObject($e->getMessage(), $code, $meta);
+        $json = new ErrorObject(__("passport.{$e->getErrorType()}"), $e->getHttpStatusCode(), $meta);
 
         $response->setData($json->toArray());
     }
