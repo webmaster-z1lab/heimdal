@@ -18,7 +18,7 @@ class AuthorizationExceptionFormatter extends BaseFormatter
      */
     public function format(JsonResponse $response, Exception $e, array $reporterResponses): void
     {
-        $code = $e instanceof AuthenticationException ? 403 : 401;
+        $code = $e instanceof AuthenticationException ? 401 : 403;
 
         $response->setStatusCode($code);
 
