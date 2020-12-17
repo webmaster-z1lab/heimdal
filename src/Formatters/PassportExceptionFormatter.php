@@ -15,8 +15,8 @@ class PassportExceptionFormatter extends BaseFormatter
      */
     public function format(JsonResponse $response, Exception $e, array $reporterResponses): void
     {
-        /** @var \League\OAuth2\Server\Exception\OAuthServerException $e */
-        $response->setStatusCode($e->getHttpStatusCode());
+        /** @var \Laravel\Passport\Exceptions\OAuthServerException $e */
+        $response->setStatusCode($e->statusCode());
 
         $meta = [];
 
@@ -24,12 +24,12 @@ class PassportExceptionFormatter extends BaseFormatter
             $meta = [
                 'file'    => $e->getFile(),
                 'line'    => $e->getLine(),
-                'message' => $e->getHint(),
+                'message' => $e->getPrevious()->getHint(),
                 'trace'   => $e->getTrace(),
             ];
         }
 
-        $json = new ErrorObject(__("passport.{$e->getErrorType()}"), $e->getHttpStatusCode(), $meta);
+        $json = new ErrorObject(__("passport.{$e->getPrevious()->getErrorType()}"), $e->statusCode(), $meta);
 
         $response->setData($json->toArray());
     }

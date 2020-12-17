@@ -7,6 +7,7 @@ namespace Optimus\Heimdal\Formatters;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Optimus\Heimdal\ErrorObject;
+use Illuminate\Auth\AuthenticationException;
 
 class AuthorizationExceptionFormatter extends BaseFormatter
 {
@@ -17,7 +18,9 @@ class AuthorizationExceptionFormatter extends BaseFormatter
      */
     public function format(JsonResponse $response, Exception $e, array $reporterResponses): void
     {
-        $response->setStatusCode(403);
+        $code = $e instanceof AuthenticationException ? 403 : 401;
+
+        $response->setStatusCode($code);
 
         $meta = [];
 
@@ -30,7 +33,7 @@ class AuthorizationExceptionFormatter extends BaseFormatter
             ];
         }
 
-        $json = new ErrorObject($e->getMessage(), 403, $meta);
+        $json = new ErrorObject($e->getMessage(), $code, $meta);
 
         $response->setData($json->toArray());
     }

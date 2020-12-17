@@ -23,7 +23,8 @@
         "orchestra/testbench": "~v6.0",
         "phpunit/phpunit": "^9.3",
         "bugsnag/bugsnag-laravel": "^2.20",
-        "php-coveralls/php-coveralls": "^2.1"
+        "php-coveralls/php-coveralls": "^2.1",
+        "laravel/passport": "^10.1"
     },
     "suggest": {
         "asm89/stack-cors": "Needed to add CORS headers if add_cors_headers configuration is true",

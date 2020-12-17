@@ -8,8 +8,9 @@ return [
 
     // Has to be in prioritized order, e.g. highest priority first.
     'formatters'       => [
-        // League\OAuth2\Server\Exception\OAuthServerException::class => Formatters\PassportExceptionFormatter::class,
+        // Laravel\Passport\Exceptions\OAuthServerException::class => Formatters\PassportExceptionFormatter::class,
         Illuminate\Auth\Access\AuthorizationException::class => Formatters\AuthorizationExceptionFormatter::class,
+        Illuminate\Auth\AuthenticationException::class       => Formatters\AuthorizationExceptionFormatter::class,
         Illuminate\Validation\ValidationException::class     => Formatters\ValidationExceptionFormatter::class,
         SymfonyException\HttpException::class                => Formatters\HttpExceptionFormatter::class,
         Exception::class                                     => Formatters\ExceptionFormatter::class,
